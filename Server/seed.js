@@ -3,24 +3,24 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-// Import your Product model
-const { Product } = require("./models/Product");
+// Import your Category model
+const { Category } = require("./models/Category");
 
-// Import products data
-const products = require("./data/products");
+// Import categories data
+const categories = require("./data/categories");
 
-// Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URL)
   .then(async () => {
     console.log("MongoDB connected");
 
-    // Optional: delete existing products
-    await Product.deleteMany();
+    // Clear old categories (optional)
+    await Category.deleteMany({});
+    console.log("Old categories removed");
 
-    // Insert products
-    await Product.insertMany(products);
-    console.log("Products added successfully");
+    // Insert new categories
+    await Category.insertMany(categories);
+    console.log("Categories added successfully");
 
     process.exit();
   })
