@@ -74,7 +74,7 @@ const App = () => {
         <Route path='/sellerOptions' element={<Protected><SellerChoosePage /></Protected>} />
         <Route path='/sellerOptions/sellerRegister' element={<Protected><SellerRegister /></Protected>} />
         <Route path='/sellerOptions/sellerLogin' element={<Protected><SellerLogin /></Protected>} />
-        <Route path='/order-success/:id' element={<OrderSuccessPage />} />
+        <Route path='/order-success' element={<OrderSuccessPage />} />
         <Route path='/sellerOptions/seller-Dashboard' element={<ProtectedSeller><SellerDashboard /></ProtectedSeller>} />
         <Route path='/sellerOptions/seller-Dashboard/manage-products' element={<ProtectedSeller><ProductPage /></ProtectedSeller>} />
         <Route path='/sellerOptions/seller-Dashboard/change-password' element={<ProtectedSeller><PasswordChange /></ProtectedSeller>} />

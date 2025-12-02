@@ -30,6 +30,7 @@ const SingleProductPage = () => {
   const [feature1, setFeature1] = useState({ title: "", option: "" });
   const [feature2, setFeature2] = useState({ title: "", option: "" });
 
+
   const cart = useSelector(selectcartItems);
 
   const handleCart = async (e) => {
@@ -45,9 +46,11 @@ const SingleProductPage = () => {
         toast.success("This product is already in cart");
         return;
       }
-      if (!feature1.title || !feature2.title) {
-        toast.error("Please Select Product Features");
-      } else {
+      if (feature1.option === "" || feature2.option === "") {
+        toast.error("Please select all features");
+        return;
+      }
+     
         const newCartItem = {
           ...product,
           productId: product.id,
@@ -55,15 +58,17 @@ const SingleProductPage = () => {
           status: "Pending",
           rated:false,
           seller: product.seller,
-          features: [feature1, feature2],
-        };
+          features: [feature1,feature2]}
+        
         //Fix for duplicate id in the cart
         // delete newCartItem['id'];
         await dispatch(addToCartAsync(newCartItem));
         dispatch(createUserInteractionAsync({productId: params.id,interactionType:'added_to_cart'}));
         await dispatch(getCartByEmailAsync());
+        toast.success("Product Added to Cart Successfully");
       }
-    }
+    
+    
   };
   useEffect(() => {
     if(userToken){
@@ -71,6 +76,9 @@ const SingleProductPage = () => {
     }
     dispatch(fetchProductByIdAsync(params.id));
   }, [params.id]);
+
+
+
 
   return (
     <div className="bg-white">
@@ -195,50 +203,51 @@ const SingleProductPage = () => {
                 onSubmit={(e) => e.preventDefault()}
               >
                 {/* 1. Feature 1 */}
-                <div className="w-full border-2 rounded-md border-black/30  px-3 py-2">
-                  <h3 className="capitalize">{product.features[0].title}</h3>
-                  <div className="mt-5 flex flex-wrap whitespace-nowrap justify-center gap-2 items-center">
-                    {product.features[0].options.map((item, index) => (
-                      <button
-                        key={index}
-                        className={`border-2 break-words border-slate-500 capitalize cursor-pointer px-3 py-4 w-auto hover:bg-violet-600 hover:text-white duration-200 ${
-                          feature1.option == item
+
+                    <h1>hello</h1>
+<div className="w-full z-1 border-2 rounded-md border-black/30 px-3 py-2">
+  <h3 className="capitalize mb-2">{product?.features[0]?.title}</h3>
+  <div className="flex flex-wrap gap-2">
+    {product?.features[0]?.options.map((item, index) => (
+      <button
+        key={index}
+        type="button"
+          className={`border-2 border-slate-500 cursor-pointer px-3 py-4 w-32 hover:bg-violet-600 hover:text-white duration-200 capitalize ${
+                          feature1.option === item
                             ? "bg-violet-600 text-white"
                             : "bg-transparent text-black"
-                        }`}
-                        value={item}
-                        onClick={(e) => {
-                          setFeature1({
-                            title: product.features[0].title,
-                            option: e.target.value,
-                          });
-                        }}
-                      >
-                        {item}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+        }`}
+        onClick={() => setFeature1({ title: product.features[0].title, option: item })}
+      >
+        {item}
+      </button>
+    ))}
+  </div>
+</div>
+
 
                 {/* 1. Feature 2 */}
-                <div className="w-full border-2 rounded-md border-black/30 px-3 py-2">
-                  <h3 className="capitalize">{product.features[1].title}</h3>
+                <div className="w-full border-2 rounded-md border-black/30 px-3 py-2"     onClick={(e) => {
+                          const newFeature = {
+                            title: product?.features[1]?.title,
+                            option: e.target.value,
+                          };
+                          setFeature2(newFeature);
+                          console.log("Feature2 Selected:", newFeature);
+                        }}>
+                  <h3 className="capitalize">{product?.features[1]?.title}</h3>
                   <div className="mt-5 flex flex-wrap whitespace-nowrap justify-center gap-2 items-center">
-                    {product.features[1].options.map((item, index) => (
+                    {product?.features[1]?.options.map((item, index) => (
                       <button
                         key={index}
+                        type="button" 
                         className={`border-2 border-slate-500 cursor-pointer px-3 py-4 w-32 hover:bg-violet-600 hover:text-white duration-200 capitalize ${
                           feature2.option === item
                             ? "bg-violet-600 text-white"
                             : "bg-transparent text-black"
                         }`}
                         value={item}
-                        onClick={(e) => {
-                          setFeature2({
-                            title: product.features[1].title,
-                            option: e.target.value,
-                          });
-                        }}
+                   
                       >
                         {item}
                       </button>
@@ -253,7 +262,7 @@ const SingleProductPage = () => {
                   type="submit"
                   className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                  Add to Cart
+                  Add to Cart 
                 </button>
               </form>
             </div>

@@ -110,10 +110,10 @@ const ProductForm = () => {
                 ...data,
             };
            
-              if (keywords.length <= 0) {
-                toast.error("Enter Keywords")
-                return
-            }
+            //   if (keywords.length <= 0) {
+            //     toast.error("Enter Keywords")
+            //     return
+            // }
             
               if (uploadedImages.length < 4) {
                 toast.error("Please Upload at least 4 images")

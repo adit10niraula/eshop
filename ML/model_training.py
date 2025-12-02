@@ -5,7 +5,12 @@ from sklearn.metrics import accuracy_score
 import pickle
 
 # Load the dataset
-data = pd.read_csv('D:/Web Dev/MERN projects/ParasharShop/ParasharShop/ML/processed_data.csv')
+# data = pd.read_csv('D:/Web Dev/MERN projects/ParasharShop/ParasharShop/ML/processed_data.csv')
+
+data_path = 'processed_data.csv'
+
+print("Loading processed_data.csv...")
+data = pd.read_csv(data_path)
 
 # Check interaction_weight distribution
 print("Interaction weight distribution:")

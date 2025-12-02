@@ -12,7 +12,8 @@ import random
 import math
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://localhost:27017/ParasharShop"
+# app.config["MONGO_URI"] = "mongodb://localhost:27017/ParasharShop"
+app.config["MONGO_URI"] = "mongodb+srv://rajkumar:messi%4010@cluster0.gcuqbwi.mongodb.net/eshop"
 mongo = PyMongo(app)
 
 # Load the trained ML model
