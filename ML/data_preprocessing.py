@@ -1,15 +1,20 @@
 import pandas as pd
+import os
 
 def preprocess_datasets():
     # Load datasets
-    df1 = pd.read_csv('D:/Web Dev/MERN projects/ParasharShop/ParasharShop/ML/datasets/2019-Dec.csv')
-    df2 = pd.read_csv('D:/Web Dev/MERN projects/ParasharShop/ParasharShop/ML/datasets/2019-Nov.csv')
-    df3 = pd.read_csv('D:/Web Dev/MERN projects/ParasharShop/ParasharShop/ML/datasets/2019-Oct.csv')
-    df4 = pd.read_csv('D:/Web Dev/MERN projects/ParasharShop/ParasharShop/ML/datasets/2020-Feb.csv')
-    df5 = pd.read_csv('D:/Web Dev/MERN projects/ParasharShop/ParasharShop/ML/datasets/2020-Jan.csv')
+    # df1 = pd.read_csv('D:/Web Dev/MERN projects/ParasharShop/ParasharShop/ML/datasets/2019-Dec.csv')
+    # df2 = pd.read_csv('D:/Web Dev/MERN projects/ParasharShop/ParasharShop/ML/datasets/2019-Nov.csv')
+    # df3 = pd.read_csv('D:/Web Dev/MERN projects/ParasharShop/ParasharShop/ML/datasets/2019-Oct.csv')
+    # df4 = pd.read_csv('D:/Web Dev/MERN projects/ParasharShop/ParasharShop/ML/datasets/2020-Feb.csv')
+    # df5 = pd.read_csv('D:/Web Dev/MERN projects/ParasharShop/ParasharShop/ML/datasets/2020-Jan.csv')
 
-    # Combine datasets
-    df = pd.concat([df1, df2, df3, df4, df5], ignore_index=True)
+    # # Combine datasets
+    # df = pd.concat([df1, df2, df3, df4, df5], ignore_index=True)
+
+    base_path = os.path.dirname(__file__)  # Gets directory of current script
+    dataset_path = os.path.join(base_path, "datasets")
+    df = pd.read_csv(os.path.join(dataset_path, 'data_processing_test.csv'))
 
     print("Processing............")
     print(f"Total rows in combined dataset: {len(df)}")

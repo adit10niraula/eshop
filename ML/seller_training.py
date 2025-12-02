@@ -7,7 +7,8 @@ import pickle
 def train_seller_model():
     try:
         # Load the preprocessed data
-        data_path = 'processed_sales_data.csv'
+        # data_path = 'processed_sales_data.csv'
+        data_path = 'processed_data.csv'
         data = pd.read_csv(data_path)
         print(f"Loaded dataset from {data_path}")
 

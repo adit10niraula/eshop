@@ -5,6 +5,7 @@ const cors = require("cors");
 const session = require("express-session");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
+const path = require("path");
 
 
 const LocalStrategy = require('passport-local').Strategy;
@@ -53,13 +54,9 @@ main().catch((err) => {
 
 const server = express();
 
-// Return Image When called http://localhost:8080/uploads/filename
-server.use(
-  "/uploads",
-  express.static(
-    "D:/Web Dev/MERN projects/ParasharShop/ParasharShop/Server/Image/uploads"
-  )
-);
+
+server.use('/uploads', express.static(path.join(__dirname, 'Image/uploads')));
+
 
 server.use(cors({
   origin: 'http://localhost:5173',

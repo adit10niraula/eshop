@@ -1,4 +1,4 @@
-# ParasharShop
+# EShop
 Ecommerce using MERN technology. Made for BCA 8th sem project after build of prototype</br>
 
 <h3>npm packages:</h3></br>

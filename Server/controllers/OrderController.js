@@ -26,7 +26,10 @@ exports.newOrderController = async (req, res) => {
 exports.userOrderController = async (req, res) => {
     const {id} = req.user;
     try {
-        const order = await Orders.find({ user: id }).populate("selectedDeliveryAddress")
+        // const order = await Orders.find({ user: id }).populate("selectedDeliveryAddress")
+        const order = await Orders.find({ user: id })
+  .populate("selectedDeliveryAddress")
+  .sort({ createdAt: -1 })       // This line makes latest order come first
         // console.log(order)
         res.status(200).json({success:true,message:"Orders Fetched Successfully",order})
     } catch (error) {

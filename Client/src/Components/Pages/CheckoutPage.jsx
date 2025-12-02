@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Cart from "../../features/cart/Cart";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector,useStore } from "react-redux";
 import {
   getCartByEmailAsync,
   removeFromCartAsync,
@@ -55,12 +55,13 @@ const CheckoutPage = () => {
   const [phoneRegErr, setPhoneRegerr] = useState(false);
   const [fullNameRegErr, setFullNameRegErr] = useState(false);
 
+  // const currentOrder = useSelector(selectCurrentOrder); // This is the newly created order!
   const user = useSelector(selectLoggedInUserInfo);
   const items = useSelector(selectcartItems);
   const addresses = useSelector(selectUserAddress);
+  const getState = useStore().getState;  // ← Add this line
 
   const currentOrder = useSelector(selectLoggedInUserOrders);
-
   const validateEmail = (email) => {
     const emailRegEx = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi;
     if (!emailRegEx.test(email)) {
@@ -186,7 +187,7 @@ const CheckoutPage = () => {
   //     }
   // }
 
-  //For Placing Order
+  // For Placing Order
   const handleOrder = async (e) => {
     e.preventDefault();
 
@@ -203,12 +204,44 @@ const CheckoutPage = () => {
         totalAmount,
       };
 
-      await dispatch(newOrderAsync(order));
-      console.log("Current Order", order);
-      dispatch(createUserInteractionAsync({ productId: order.products.map(item => item.product.id), interactionType: 'purchased' }));
-      navigate(`/order-success/${currentOrder?.length}`);
+      // await dispatch(newOrderAsync(order));
+      // console.log("Current Order", order);
+      // dispatch(createUserInteractionAsync({ productId: order.products.map(item => item.product.id), interactionType: 'purchased' }));
+      // navigate(`/order-success/${selectCurrentOrder(getState()).id}`);
+
+      
+  try {
+    // Place the order
+    const resultAction = await dispatch(newOrderAsync(order));
+
+    // Check if order was successful
+    if (newOrderAsync.fulfilled.match(resultAction)) {
+      const newOrder = resultAction.payload.order;
+
+      // Record purchase for ML model
+      dispatch(createUserInteractionAsync({
+        productId: items.map(item => item.product.id || item.product._id),
+        interactionType: 'purchased'
+      }));
+
+      // CLEAR THE CART AFTER SUCCESSFUL ORDER
+      await dispatch(resetCartAsync());
+
+      // Show success & redirect
+      toast.success("Order Placed Successfully!");
+      navigate(`/`);
+
+    } else {
+      toast.error("Order failed. Please try again.");
+    }
+  } catch (error) {
+    console.error("Order error:", error);
+    toast.error("Something went wrong!");
+  }
+     
     }
   };
+
 
   const totalItems = items?.reduce((accumulator, object) => {
     return object.quantity + accumulator;

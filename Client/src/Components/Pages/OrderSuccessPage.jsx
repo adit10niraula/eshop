@@ -15,7 +15,7 @@ const OrderSuccessPage = () => {
 
     const templatevariables = {
         to_name: user_name,
-        from_name:"Parashar Shop",
+        from_name:"EShop",
         message: "You Have Received a New Order, Visit your Dashboard to View Detail!"
     }
     

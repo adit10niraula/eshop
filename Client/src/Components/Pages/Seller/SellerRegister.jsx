@@ -31,6 +31,7 @@ const SellerRegister = () => {
     };
 
     const response = await dispatch(registerSellerAsync(data));
+    navigate("/sellerOptions/sellerLogin");
     if (response.error) {
       const errorMessage =
         typeof response.error === "string"

@@ -72,7 +72,7 @@ const SellerDashboard = () => {
           <div className="flex flex-row justify-center mt-4 h-fit lg:flex-col gap-2 text-sm flex-wrap">
             <Link
               to={"manage-products"}
-              className="relative bg-violet-700 text-white font-bold text-center px-3 py-4 flex flex-row justify-center gap-6 items-center"
+              className="relative  bg-violet-700 text-white font-bold text-center px-3 py-4 flex flex-row justify-center gap-6 items-center"
             >
               Manage Products  <span className="absolute right-28 hidden lg:flex"><FaRegArrowAltCircleRight size={28}/></span>
             </Link>
@@ -86,7 +86,7 @@ const SellerDashboard = () => {
               to={"change-password"}
               className="relative bg-violet-700 text-white font-bold text-center px-3 py-4 flex flex-row justify-center gap-6 items-center"
             >
-              Change Business Password <span className="absolute right-28  hidden lg:flex"><FaRegArrowAltCircleRight size={28}/></span>
+              Change  Password <span className="absolute right-28  hidden lg:flex"><FaRegArrowAltCircleRight size={28}/></span>
             </Link>
             <Link
               to={"insights"}
